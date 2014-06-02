@@ -1,0 +1,9 @@
+/.bundle
+/.vagrant
+/cookbooks
+/chef-cache
+/chef-backup
+/chef-checksum
+/chef-sandbox
+/environments
+/tmp

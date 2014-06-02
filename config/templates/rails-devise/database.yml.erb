@@ -1,0 +1,6 @@
+production:
+  adapter: sqlite3
+  pool: 5
+  timeout: 5000
+  # Just to illustrate, it doesn't make sense for Sqlite, but it does for PG for instance:
+  database: db/<%= cfg.app_name %>_<%= cfg.app_env %>.sqlite3

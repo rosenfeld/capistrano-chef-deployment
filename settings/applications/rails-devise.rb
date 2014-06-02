@@ -1,0 +1,5 @@
+cfg.chef_runlist << 'myproject::rails_devise'
+cfg.app_scm = 'git'
+cfg.app_repo_url = 'https://github.com/RailsApps/rails-devise.git'
+cfg.rails_devise.email_provider_username = 'admin'
+cfg.rails_devise.email_provider_password = 's3cret'

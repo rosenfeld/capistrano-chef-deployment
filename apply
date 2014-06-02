@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+runlist="$1"
+env="$2"
+[ -z "$runlist" ] && runlist="myproject"
+[ -z "$env" ] && env="_default"
+echo "Applying Chef recipes for env '$env' and runlist '$runlist'"
+
+[ -z $skip_pull ] && git pull
+. ~/.rbenvrc
+export BUNDLE_GEMFILE=Gemfile.chef
+[ -z $quick ] && bundle
+rbenv rehash
+[ -z $quick ] && bundle exec librarian-chef install
+[ -z $node_override ] || node_override="-N $node_override"
+mkdir -p environments
+[ -z $env ] || touch environments/${env}.rb
+
+rbenv sudo BUNDLE_GEMFILE=Gemfile.chef bundle exec chef-solo -o $runlist -c solo.rb $node_override    -E $env

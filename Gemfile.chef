@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+
+instance_eval File.read 'Gemfile.common'
+gem 'chef'
+gem 'librarian-chef'

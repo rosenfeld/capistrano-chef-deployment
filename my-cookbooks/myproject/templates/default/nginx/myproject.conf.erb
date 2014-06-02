@@ -1,0 +1,27 @@
+upstream <%= cfg.app_name %>_cluster_<%= cfg.app_env %> {
+  server localhost:<%= cfg.rails_devise.listen_port %>;
+}
+
+server {
+  listen 80<%= cfg.nginx.default ? ' default' : '' %>;
+  server_name <%= cfg.nginx.host %>;
+  access_log /var/log/nginx/<%= cfg.app_env %>_<%= cfg.app_name %>.log request_time;
+  gzip on;
+  gzip_types text/plain application/json application/javascript text/css;
+  gzip_proxied any;
+  location ~ ^/(assets)/  {
+    root /var/www/apps/<%= cfg.app_env %>/<%= cfg.app_name %>/current/public;
+    gzip_static on; # to serve pre-gzipped version
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  location / {
+    proxy_pass http://<%= cfg.app_name %>_cluster_<%= cfg.app_env %>;
+    # Forward original URL to proxy
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_http_version 1.1;
+  }
+}
