@@ -1,3 +1,3 @@
 require 'pp'
 include_recipe 'myproject::environment'
-::Kernel.pp settings_to_h
+::Kernel.pp cfg.to_h

@@ -43,11 +43,4 @@ module SettingsLoader
     ].each{|s| load_settings s }
     cfg.lock!
   end
-
-  def settings_to_h(conf = cfg, h = {})
-    conf.each do |k, v|
-      h[k] = Configatron::Store === v ? settings_to_h(v) : v
-    end
-    h
-  end
 end

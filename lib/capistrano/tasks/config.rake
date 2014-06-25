@@ -1,6 +1,6 @@
 namespace 'config' do
   desc "Print config"
   task :print do
-    pp settings_to_h
+    pp cfg.to_h
   end
 end
